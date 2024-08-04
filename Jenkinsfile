@@ -17,10 +17,15 @@ node {
                         cat deployment.yaml
                         git add .
                         git commit -m 'Done by Jenkins Job changemanifest: ${env.BUILD_NUMBER}'
+
+                        # Construct the Git URL
+                        GIT_URL="https://${GIT_USERNAME}:${GIT_PASSWORD}@github.com/${GIT_USERNAME}/jenkins-argocd-pipeline-deploy.git"
+
                         # Debug the constructed URL
-                        echo "https://${GIT_USERNAME}:${GIT_PASSWORD}@github.com/${GIT_USERNAME}/jenkins-argocd-pipeline-deploy.git"
-                        # Use the debugged URL
-                        git push "https://${GIT_USERNAME}:${GIT_PASSWORD}@github.com/${GIT_USERNAME}/jenkins-argocd-pipeline-deploy.git" HEAD:main
+                        echo \$GIT_URL
+
+                        # Use the constructed URL
+                        git push \$GIT_URL HEAD:main
                     """
                 }
             }
